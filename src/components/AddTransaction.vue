@@ -24,7 +24,6 @@ const amount = ref('');
 
 const emit = defineEmits(['transactionSubmitted']);
 
-
 const toast = useToast('');
 
 const onSubmit = () => {
@@ -39,8 +38,8 @@ const onSubmit = () => {
         };
 
         emit('transactionSubmitted', transactionData);
-        text.value = '';
-        amount.value = '';
+  text.value = '';
+  amount.value = '';
     }
 
 
