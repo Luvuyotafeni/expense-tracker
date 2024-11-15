@@ -2,7 +2,7 @@
 <Header />
 <div class="container">
  <Balance :total="total"/>
- <BalanceExpenses :income="income" :expense="expense"/>
+ <BalanceExpenses :income="+income" :expense="+expense"/>
  <TranscationHistory :transactions="transactions"/>
  <AddTransaction/>
 </div>
@@ -48,4 +48,6 @@ const expense = computed(() => {
         return acc + transaction.amount;
     }, 0).toFixed(2);
 })
+
+
 </script>
