@@ -15,6 +15,6 @@ const props = defineProps ({
     transactions:{
         type:Array,
         required: true,
-    }
-})
+    },
+});
 </script>
