@@ -23,10 +23,7 @@ import { ref, computed } from 'vue';
 const toast = useToast();
 
 const transactions = ref( [
-                { id: 1, text:'flour', amount: -999 },
-                { id: 2, text:'flour', amount: 999 },
-                { id: 3, text:'flour', amount: 999 },
-                { id: 4, text:'flour', amount: -699 },
+                
             ]);
 const total = computed(() => {
     return transactions.value.reduce((acc, transaction) => {
