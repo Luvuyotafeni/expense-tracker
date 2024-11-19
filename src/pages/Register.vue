@@ -1,30 +1,57 @@
 <script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+
+const username = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const errorMessage = ref('');
+const router = useRouter();
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = "Passwords do not match.";
+    return;
+  }
+
+  try {
+    const response = await axios.post('http://localhost:5000/api/auth/register', {
+      username: username.value,
+      password: password.value,
+    });
+    router.push('/login');  // Redirect to login page after successful registration
+  } catch (error) {
+    errorMessage.value = error.response.data.error;
+  }
+};
 </script>
+
 
 <template>
   
-    <form class="form-container">
-      <div class="form-group">
-        <label for="username">Enter your Username</label>
-        <input type="text" id="username" placeholder="Enter your username" />
-      </div>
-      <div class="form-group">
-        <label for="password">Create Password</label>
-        <input type="password" id="password" placeholder="Create a password" />
-      </div>
-      <div class="form-group">
-        <label for="confirm-password">Confirm Password</label>
-        <input
-          type="password"
-          id="confirm-password"
-          placeholder="Confirm your password"
-        />
-      </div>
-      <div class="login-text">
-        <button type="submit" class="btn">Register</button>
-        <p>Already have an account? <a href="/login">Log In</a></p>
-      </div>
-    </form>
+  <form class="form-container" @submit="handleSubmit">
+  <div class="form-group">
+    <label for="username">Enter your Username</label>
+    <input type="text" id="username" v-model="username" placeholder="Enter your username" />
+  </div>
+  <div class="form-group">
+    <label for="password">Create Password</label>
+    <input type="password" id="password" v-model="password" placeholder="Create a password" />
+  </div>
+  <div class="form-group">
+    <label for="confirm-password">Confirm Password</label>
+    <input type="password" id="confirm-password" v-model="confirmPassword" placeholder="Confirm your password" />
+  </div>
+  <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div class="login-text">
+    <button type="submit" class="btn">Register</button>
+    <p>Already have an account? <a href="/login">Log In</a></p>
+  </div>
+</form>
+
 </template>
 
 <style scoped>
