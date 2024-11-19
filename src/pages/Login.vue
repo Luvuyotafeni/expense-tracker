@@ -2,23 +2,24 @@
 </script>
 
 <template>
-    <form class="form-container">
-      <div class="form-group">
-        <label for="username">Enter your Username</label>
-        <input type="text" id="username" placeholder="Enter your username" />
-      </div>
-      <div class="form-group">
-        <label for="password">Enter your Password</label>
-        <input type="password" id="password" placeholder="Enter your password" />
-      </div>
-      <button type="submit" class="btn">Log In</button>
-    </form>
-
+  <form class="form-container">
+    <div class="form-group">
+      <label for="username">Enter your Username</label>
+      <input type="text" id="username" placeholder="Enter your username" />
+    </div>
+    <div class="form-group">
+      <label for="password">Enter your Password</label>
+      <input type="password" id="password" placeholder="Enter your password" />
+    </div>
+    <button type="submit" class="btn">Log In</button>
+    
+    <div class="register-text">
+      <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+  </form>
 </template>
 
 <style scoped>
-
-
 .form-container {
   background: white;
   padding: 2rem;
@@ -66,5 +67,19 @@ input:focus {
 
 .btn:hover {
   background-color: #357ab8;
+}
+
+.register-text {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.register-text a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
 }
 </style>

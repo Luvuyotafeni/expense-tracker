@@ -20,7 +20,10 @@
           placeholder="Confirm your password"
         />
       </div>
-      <button type="submit" class="btn">Register</button>
+      <div class="login-text">
+        <button type="submit" class="btn">Register</button>
+        <p>Already have an account? <a href="/login">Log In</a></p>
+      </div>
     </form>
 </template>
 
@@ -74,5 +77,8 @@ input:focus {
 
 .btn:hover {
   background-color: #357ab8;
+}
+.login-text a:hover {
+  text-decoration: underline;
 }
 </style>
