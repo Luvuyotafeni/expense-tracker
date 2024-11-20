@@ -13,7 +13,6 @@ const handleLogin = async () => {
   errorMessage.value = ''; // Clear previous error message
 
   try {
-    // Send the login request to the backend
     const response = await fetch('http://localhost:5000/api/auth/login', {
       method: 'POST',
       headers: {
@@ -27,13 +26,18 @@ const handleLogin = async () => {
 
     const data = await response.json();
 
+    // Check if the response is OK (status code 200-299)
     if (response.ok) {
-      // Handle successful login (store session or token if necessary)
       alert('Login successful');
-      // Redirect to another page after successful login
-      router.push('/dashboard'); // Adjust the target route as necessary
+      console.log('User ID from response:', data.userId);  // Log the userId in the browser console
+
+      // You can store the userId for future use
+      localStorage.setItem('userId', data.userId);
+
+      // Redirect to the dashboard page (adjust the route if necessary)
+      router.push('/dashboard');
     } else {
-      // Display error message if login fails
+      // Handle error in login response
       errorMessage.value = data.message || 'An error occurred during login.';
     }
   } catch (error) {
@@ -41,6 +45,7 @@ const handleLogin = async () => {
     errorMessage.value = 'An error occurred. Please try again later.';
   }
 };
+
 </script>
 
 <template>
