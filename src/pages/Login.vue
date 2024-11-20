@@ -1,18 +1,64 @@
 <script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const username = ref('');
+const password = ref('');
+const errorMessage = ref('');
+
+// Initialize Vue Router for redirection
+const router = useRouter();
+
+const handleLogin = async () => {
+  errorMessage.value = ''; // Clear previous error message
+
+  try {
+    // Send the login request to the backend
+    const response = await fetch('http://localhost:5000/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // Handle successful login (store session or token if necessary)
+      alert('Login successful');
+      // Redirect to another page after successful login
+      router.push('/dashboard'); // Adjust the target route as necessary
+    } else {
+      // Display error message if login fails
+      errorMessage.value = data.message || 'An error occurred during login.';
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    errorMessage.value = 'An error occurred. Please try again later.';
+  }
+};
 </script>
 
 <template>
-  <form class="form-container">
+  <form @submit.prevent="handleLogin" class="form-container">
     <div class="form-group">
       <label for="username">Enter your Username</label>
-      <input type="text" id="username" placeholder="Enter your username" />
+      <input type="text" id="username" v-model="username" placeholder="Enter your username" required />
     </div>
     <div class="form-group">
       <label for="password">Enter your Password</label>
-      <input type="password" id="password" placeholder="Enter your password" />
+      <input type="password" id="password" v-model="password" placeholder="Enter your password" required />
     </div>
     <button type="submit" class="btn">Log In</button>
     
+    <div v-if="errorMessage" class="error-message">
+      <p style="color: red;">{{ errorMessage }}</p>
+    </div>
+
     <div class="register-text">
       <p>Don't have an account? <a href="/register">Register</a></p>
     </div>
@@ -81,5 +127,10 @@ input:focus {
 
 .register-text a:hover {
   text-decoration: underline;
+}
+
+.error-message {
+  text-align: center;
+  margin-top: 1rem;
 }
 </style>
