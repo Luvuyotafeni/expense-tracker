@@ -1,13 +1,15 @@
 <script setup>
 import TranscationHistory from './TranscationHistory.vue';
 import BalanceExpenses from './BalanceExpenses.vue';
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onUnmounted} from 'vue'
 import axios from 'axios'
 
 
 const transactions = ref([]);
 const totalIncome = ref(0);
 const totalExpense = ref(0);
+
+let intervalId;
 
 // Calculating the total for all transactions
 const calculateTotals = () => {
@@ -35,7 +37,6 @@ const fetchTransactions = async () => {
             axios.get(`http://localhost:5000/api/income/${userId}`)
         ]);
 
-        //Combining the expenses and incomes in order to display them as an array
 
         //acknowledging the difference between the incomes and expenses
         const expenses = expensesResponse.data.map(transaction => ({
@@ -58,6 +59,15 @@ const fetchTransactions = async () => {
     }
 };
 
+
+//polling the server
+const startPolling = () => {
+    intervalId = setInterval(fetchTransactions,1000);
+}
+
+const stopPolling = () => {
+    if (intervalId) clearInterval(intervalId);
+}
 // Deleting a transaction
 
 const deleteTransaction = async (id) => {
@@ -90,14 +100,18 @@ const deleteTransaction = async (id) => {
 //fetch the transaction when this component in mounted 
 onMounted(() => {
     fetchTransactions();
+    startPolling();
+});
+
+onUnmounted(() => { 
+    startPolling();    
 });
 
 
-
 </script>
-<template>
+<template>  
     <div>
         <BalanceExpenses :income="totalIncome" :expense="totalExpense"/>
-        <TranscationHistory :transactions="transactions"/>
+        <TranscationHistory :transactions="transactions" @transaction-deleted="deleteTransaction"/>
     </div>
 </template>
