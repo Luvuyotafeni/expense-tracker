@@ -23,14 +23,21 @@ const fetchTransactions = async () => {
 
         //Combining the expenses and incomes in order to display them as an array
 
-        const allTransactions = [
-            ...expensesResponse.data.map( transaction => ({...transaction, amount: -transaction.amount})),
-            ...incomesResponse.data
-        ];
+        //acknowledging the difference between the incomes and expenses
+        const expenses = expensesResponse.data.map(transaction => ({
+            ...transaction,
+            type: 'expense',
+            amount: -Math.abs(transaction.amount)
+        }));
+
+        const incomes = incomesResponse.data.map(transaction => ({
+            ...transaction,
+            type: 'income',
+        }));
 
         //sorting the transactions
 
-        transactions.value = allTransactions.sort((a,b ) => new Date(b.date) - new Date(a.date));
+        transactions.value = [...expenses, ...incomes].sort((a, b) => new Date(b.date) - new Date(a.date) );
     } catch (err) {
         console.error('Error fetching the transacctions', err)
     }
