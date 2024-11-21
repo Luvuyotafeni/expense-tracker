@@ -50,6 +50,7 @@ const handleLogin = async () => {
 
 <template>
   <form @submit.prevent="handleLogin" class="form-container">
+    <h3 class="text-center">Log In</h3>
     <div class="form-group">
       <label for="username">Enter your Username</label>
       <input type="text" id="username" v-model="username" placeholder="Enter your username" required />
@@ -88,6 +89,11 @@ label {
   display: block;
   font-weight: bold;
   margin-bottom: 0.5rem;
+}
+
+.text-center{
+  text-align: center;
+  margin: 0 0 50px 0 ;
 }
 
 input {
