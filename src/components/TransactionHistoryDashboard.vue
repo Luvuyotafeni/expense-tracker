@@ -1,10 +1,24 @@
 <script setup>
 import TranscationHistory from './TranscationHistory.vue';
+import BalanceExpenses from './BalanceExpenses.vue';
 import {ref, onMounted} from 'vue'
 import axios from 'axios'
 
 
 const transactions = ref([]);
+const totalIncome = ref(0);
+const totalExpense = ref(0);
+
+// Calculating the total for all transactions
+const calculateTotals = () => {
+    totalIncome.value = transactions.value.filter((transaction)=> transaction.type === 'income')
+    .reduce((sum, transaction ) => sum + transaction.amount, 0);
+
+
+    totalExpense.value = transactions.value
+    .filter((transaction) => transaction.type === 'expense')
+    .reduce((sum, transaction) => sum + transaction.amount, 0);
+};
 
 //fetching the expenses and incomes from the backend
 const fetchTransactions = async () => {
@@ -38,6 +52,7 @@ const fetchTransactions = async () => {
         //sorting the transactions
 
         transactions.value = [...expenses, ...incomes].sort((a, b) => new Date(b.date) - new Date(a.date) );
+        calculateTotals();
     } catch (err) {
         console.error('Error fetching the transacctions', err)
     }
@@ -50,6 +65,7 @@ onMounted(() => {
 </script>
 <template>
     <div>
+        <BalanceExpenses :income="totalIncome" :expense="totalExpense"/>
         <TranscationHistory :transactions="transactions"/>
     </div>
 </template>

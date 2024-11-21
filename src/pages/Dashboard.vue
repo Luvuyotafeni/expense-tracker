@@ -3,7 +3,7 @@
       <Header />
       <div class="container">
         <Balance :total="total" />
-        <BalanceExpenses :income="income" :expense="expense" />
+        <!-- <BalanceExpenses :income="income" :expense="expense" /> -->
         <!-- <TransactionHistory :transactions="transactions" @transactionDeleted="handleTransactionDeleted" /> -->
         <TransactionHistoryDashboard/>
         <AddTransaction @transactionSubmitted="handleTransactionSubmitted" />
@@ -14,8 +14,7 @@
   <script setup>
   import Header from '../components/Header.vue';
   import Balance from '../components/Balance.vue';
-  import BalanceExpenses from '../components/BalanceExpenses.vue';
-  import TransactionHistory from '../components/TranscationHistory.vue';
+
   import AddTransaction from '../components/AddTransaction.vue';
   
   import { ref, computed } from 'vue';
