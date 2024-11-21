@@ -57,10 +57,42 @@ const fetchTransactions = async () => {
         console.error('Error fetching the transacctions', err)
     }
 };
+
+// Deleting a transaction
+
+const deleteTransaction = async (id) => {
+    try{
+        const userId = localStorage.getItem('userId');
+        if (!userId){
+            console.error('user is not logged in');
+            return;
+        }
+
+        // finding if it is an expense or income
+
+        const transaction = transactions.value.find(t => t.id === id );
+        if (!transaction){
+            console.error('transaction noopt found');
+            return;
+        }
+
+        const route =  transaction.amount < 0? `/api/expense/${id}` : `/api/expense/${id};`
+        await axios.delete(route);
+
+        //remocing the transaction from
+        transactions.value = transactions.value.filter(t => t.id !== id);
+    } catch (err) {
+        console.error('Error deleting  Ttransaction', err);
+    }
+
+}
+
 //fetch the transaction when this component in mounted 
 onMounted(() => {
     fetchTransactions();
 });
+
+
 
 </script>
 <template>
