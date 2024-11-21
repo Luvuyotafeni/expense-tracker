@@ -4,7 +4,8 @@
       <div class="container">
         <Balance :total="total" />
         <BalanceExpenses :income="income" :expense="expense" />
-        <TransactionHistory :transactions="transactions" @transactionDeleted="handleTransactionDeleted" />
+        <!-- <TransactionHistory :transactions="transactions" @transactionDeleted="handleTransactionDeleted" /> -->
+        <TransactionHistoryDashboard/>
         <AddTransaction @transactionSubmitted="handleTransactionSubmitted" />
       </div>
     </div>
@@ -18,6 +19,7 @@
   import AddTransaction from '../components/AddTransaction.vue';
   
   import { ref, computed } from 'vue';
+import TransactionHistoryDashboard from '@/components/TransactionHistoryDashboard.vue';
   
   const transactions = ref([]);
   const total = computed(() =>
