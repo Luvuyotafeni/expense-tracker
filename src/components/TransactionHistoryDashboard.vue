@@ -26,36 +26,33 @@ const calculateTotals = () => {
 const fetchTransactions = async () => {
     try {
         const userId = localStorage.getItem('userId');
-        if (!userId){
-            console.error('user is not logged in');
+        if (!userId) {
+            console.error('User is not logged in');
             return;
         }
 
-        // fetch both expenses and incomes
         const [expensesResponse, incomesResponse] = await Promise.all([
             axios.get(`http://localhost:5000/api/expense/${userId}`),
             axios.get(`http://localhost:5000/api/income/${userId}`)
         ]);
 
-
-        //acknowledging the difference between the incomes and expenses
         const expenses = expensesResponse.data.map(transaction => ({
             ...transaction,
             type: 'expense',
-            amount: -Math.abs(transaction.amount)
+            amount: -Math.abs(transaction.amount),
+            id: transaction._id, 
         }));
 
         const incomes = incomesResponse.data.map(transaction => ({
             ...transaction,
             type: 'income',
+            id: transaction._id, 
         }));
 
-        //sorting the transactions
-
-        transactions.value = [...expenses, ...incomes].sort((a, b) => new Date(b.date) - new Date(a.date) );
+        transactions.value = [...expenses, ...incomes].sort((a, b) => new Date(b.date) - new Date(a.date));
         calculateTotals();
     } catch (err) {
-        console.error('Error fetching the transacctions', err)
+        console.error('Error fetching transactions', err);
     }
 };
 
@@ -71,31 +68,30 @@ const stopPolling = () => {
 // Deleting a transaction
 
 const deleteTransaction = async (id) => {
-    try{
+    try {
         const userId = localStorage.getItem('userId');
-        if (!userId){
-            console.error('user is not logged in');
+        if (!userId) {
+            console.error('User is not logged in');
             return;
         }
 
-        // finding if it is an expense or income
-
-        const transaction = transactions.value.find(t => t.id === id );
-        if (!transaction){
-            console.error('transaction noopt found');
+        const transaction = transactions.value.find(t => t.id === id);
+        if (!transaction) {
+            console.error('Transaction not found');
             return;
         }
 
-        const route =  transaction.amount < 0? `/api/expense/${id}` : `/api/expense/${id};`
+        const route = transaction.type === 'expense'
+            ? `http://localhost:5000/api/expense/${id}`
+            : `http://localhost:5000/api/income/${id}`;
         await axios.delete(route);
 
-        //remocing the transaction from
         transactions.value = transactions.value.filter(t => t.id !== id);
     } catch (err) {
-        console.error('Error deleting  Ttransaction', err);
+        console.error('Error deleting transaction', err);
     }
+};
 
-}
 
 //fetch the transaction when this component in mounted 
 onMounted(() => {
@@ -104,7 +100,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => { 
-    startPolling();    
+    stopPolling();    
 });
 
 
