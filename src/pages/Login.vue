@@ -45,6 +45,10 @@ const handleLogin = async () => {
     errorMessage.value = 'An error occurred. Please try again later.';
   }
 };
+// Redirect to the register page
+const goToRegister = () => {
+  router.push('/register');
+};
 
 </script>
 
@@ -66,7 +70,7 @@ const handleLogin = async () => {
     </div>
 
     <div class="register-text">
-      <p>Don't have an account? <a href="/register">Register</a></p>
+      <p>Don't have an account? <a @click.prevent="goToRegister">Register</a></p>
     </div>
   </form>
 </template>
