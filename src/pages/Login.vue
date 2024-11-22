@@ -1,12 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useToast } from 'vue-toastification';
 
 const username = ref('');
 const password = ref('');
 const errorMessage = ref('');
-toast = useToast();
 
 // Initialize Vue Router for redirection
 const router = useRouter();
@@ -30,7 +28,7 @@ const handleLogin = async () => {
 
     // Check if the response is OK (status code 200-299)
     if (response.ok) {
-      toast.success('Login successful');
+      alert('Login successful');
       console.log('User ID from response:', data.userId);  // Log the userId in the browser console
 
       // You can store the userId for future use

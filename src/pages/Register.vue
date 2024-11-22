@@ -2,14 +2,12 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { useToast } from 'vue-toastification';
 
 const username = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const errorMessage = ref('');
 const router = useRouter();
-const toast = useToast();
 
 const handleSubmit = async (event) => {
   event.preventDefault();
@@ -24,7 +22,6 @@ const handleSubmit = async (event) => {
       username: username.value,
       password: password.value,
     });
-    toast.success('Registration successful');
     router.push('/login');  // Redirect to login page after successful registration
   } catch (error) {
     errorMessage.value = error.response.data.error;
