@@ -18,10 +18,11 @@ import Balance from '../components/Balance.vue';
 import AddTransaction from '../components/AddTransaction.vue';
 import TransactionHistoryDashboard from '@/components/TransactionHistoryDashboard.vue';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 
 import { ref, computed } from 'vue';
 const router = useRouter();
-
+const toast = useToast();
 const transactions = ref([]);
 const total = computed(() =>
   transactions.value.reduce((acc, transaction) => acc + transaction.amount, 0)
@@ -51,7 +52,7 @@ const handleTransactionDeleted = (id) => {
 };
 
 const logout = () => {
-  alert('Logging out...');
+  toast.error('Logging out...');
   // Add your logout logic here, e.g., clearing authentication tokens or redirecting
   router.push('/login');
 };
