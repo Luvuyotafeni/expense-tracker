@@ -33,8 +33,8 @@ const fetchTransactions = async () => {
     }
 
     const [expensesResponse, incomesResponse] = await Promise.all([
-      axios.get(`http://localhost:5000/api/expense/${userId}`),
-      axios.get(`http://localhost:5000/api/income/${userId}`),
+      axios.get(`https://expense-tracker-backend-2cs2.onrender.com/api/expense/${userId}`),
+      axios.get(`https://expense-tracker-backend-2cs2.onrender.com/api/income/${userId}`),
     ]);
 
     const expenses = expensesResponse.data.map((transaction) => ({
@@ -85,8 +85,8 @@ const deleteTransaction = async (id) => {
 
     const route =
       transaction.type === 'expense'
-        ? `http://localhost:5000/api/expense/${id}`
-        : `http://localhost:5000/api/income/${id}`;
+        ? `https://expense-tracker-backend-2cs2.onrender.com/api/expense/${id}`
+        : `https://expense-tracker-backend-2cs2.onrender.com/api/income/${id}`;
     await axios.delete(route);
 
     transactions.value = transactions.value.filter((t) => t.id !== id);

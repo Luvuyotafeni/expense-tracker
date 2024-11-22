@@ -18,7 +18,7 @@ const handleSubmit = async (event) => {
   }
 
   try {
-    const response = await axios.post('http://localhost:5000/api/auth/register', {
+    const response = await axios.post('https://expense-tracker-backend-2cs2.onrender.com/api/auth/register', {
       username: username.value,
       password: password.value,
     });

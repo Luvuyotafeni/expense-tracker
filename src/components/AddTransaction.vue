@@ -53,7 +53,7 @@ const onSubmit = async () => {
 
   try {
     // Determine route based on transaction type
-    const route = transactionData.amount >= 0 ? 'http://localhost:5000/api/income' : 'http://localhost:5000/api/expense';
+    const route = transactionData.amount >= 0 ? 'https://expense-tracker-backend-2cs2.onrender.com/api/income' : 'https://expense-tracker-backend-2cs2.onrender.com/api/expense';
 
     // Send transaction to the backend
     const response = await axios.post(route, transactionData);
