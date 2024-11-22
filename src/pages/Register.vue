@@ -27,6 +27,10 @@ const handleSubmit = async (event) => {
     errorMessage.value = error.response.data.error;
   }
 };
+
+const goToLogin = () => {
+  router.push('/login');
+};
 </script>
 
 
@@ -48,7 +52,7 @@ const handleSubmit = async (event) => {
   <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
   <div class="login-text">
     <button type="submit" class="btn">Register</button>
-    <p>Already have an account? <a href="/login">Log In</a></p>
+    <p>Already have an account? <a @click.prevent="goToLogin">Log In</a></p>
   </div>
 </form>
 
