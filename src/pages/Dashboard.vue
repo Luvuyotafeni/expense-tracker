@@ -53,7 +53,7 @@ const handleTransactionDeleted = (id) => {
 const logout = () => {
   alert('Logging out...');
   // Add your logout logic here, e.g., clearing authentication tokens or redirecting
-  router.push('/register');
+  router.push('/login');
 };
 </script>
 
