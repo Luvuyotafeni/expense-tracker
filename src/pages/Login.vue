@@ -6,7 +6,7 @@ import { useToast } from 'vue-toastification';
 const username = ref('');
 const password = ref('');
 const errorMessage = ref('');
-toast = useToast();
+const toast = useToast();
 
 // Initialize Vue Router for redirection
 const router = useRouter();
