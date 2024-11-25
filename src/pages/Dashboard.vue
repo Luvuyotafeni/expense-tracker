@@ -9,6 +9,7 @@
       <TransactionHistoryDashboard />
       <AddTransaction @transactionSubmitted="handleTransactionSubmitted" />
     </div>
+    
   </div>
 </template>
 
@@ -52,6 +53,7 @@ const handleTransactionDeleted = (id) => {
 };
 
 const logout = () => {
+  localStorage.removeItem('userID');
   toast.error('Logging out...');
   // Add your logout logic here, e.g., clearing authentication tokens or redirecting
   router.push('/login');
