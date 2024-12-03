@@ -40,6 +40,7 @@ const goToLogin = () => {
 <template>
   
   <form class="form-container" @submit="handleSubmit">
+    <h3 class="text-center">Register</h3>
   <div class="form-group">
     <label for="username">Enter your Username</label>
     <input type="text" id="username" v-model="username" placeholder="Enter your username" />
