@@ -77,6 +77,11 @@ const goToLogin = () => {
 .form-group {
   margin-bottom: 1.5rem;
 }
+.text-center{
+  text-align: center;
+  margin: 0 0 50px 0 ;
+}
+
 
 label {
   display: block;
